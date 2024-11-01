@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CacheManager.Core" Version="2.0.0-beta-1629" />
+      <PackageReference Include="CacheManager.Microsoft.Extensions.Caching.Memory" Version="2.0.0-beta-1629" />
+      <PackageReference Include="CacheManager.SystemRuntimeCaching" Version="2.0.0-beta-1629" />
+      <PackageReference Include="CsvHelper" Version="33.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="ServiceDBv1.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="firewall.log">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="firewall_test.log">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

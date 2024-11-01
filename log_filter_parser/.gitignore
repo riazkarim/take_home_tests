@@ -1,0 +1,57 @@
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*.egg
+*.egg-info
+dist/
+build/
+*.pyd
+*.pyc
+*.pyo
+*.py[cod]
+
+# Go
+/bin/
+/pkg/
+
+# C#
+bin/
+obj/
+*.exe
+*.dll
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+.gradle/
+build/
+
+# General
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.lock
+*.bak
+*.old
+*.orig
+*.rej
+*.sublime-project
+*.sublime-workspace
