@@ -1,5 +1,6 @@
 from collections import defaultdict
 from functools import lru_cache
+from typing import List
 
 """
 Represents the given keypad internally as a 2D non-jagged array.
@@ -100,9 +101,10 @@ class KeypadSequenceFinder:
     This method uses a cache (memoisation) to reduce the number of repeated recursive calls. 
     """
     @lru_cache(None)
-    def get_sequence_count(self, key: str, length: int, num_vowels: int) -> int:
+    def get_sequence_count(self, key: str, length: int, num_vowels: int, keys: List[str]) -> int:
         # if the sequence length is sequence_length, the sequence is valid, return 1
         if length == self.sequence_length:
+            print(keys)
             return 1
 
         total = 0
@@ -110,16 +112,38 @@ class KeypadSequenceFinder:
         for next_key in valid_next_keys:
             if next_key in self._vowels:
                 if num_vowels < self.max_vowels:  # Only recurse if we have not met our vowel limit
-                    total += self.get_sequence_count(next_key, length + 1, num_vowels + 1)
+                    total += self.get_sequence_count(next_key, length + 1, num_vowels + 1, keys + next_key)
             else:
-                total += self.get_sequence_count(next_key, length + 1, num_vowels)
+                total += self.get_sequence_count(next_key, length + 1, num_vowels, keys + next_key)
         return total
 
     """
     Get the total number of possible combinations for all valid initial key presses
     """
     def get_total_count(self):
-        return sum(self.get_sequence_count(key, 1, 1 if key in self._vowels else 0) for key in self.keypad.get_keys())
+        return sum(self.get_sequence_count(key, length=1,
+                                           num_vowels=1 if key in self._vowels else 0,
+                                           keys=[])
+                   for key in self.keypad.get_keys())
+
+    """
+    Check whether a given sequence is valid
+    """
+    def validate_sequence(self, sequence: List[str]):
+        if len(sequence) != self.sequence_length:
+            raise ValueError(f"Invalid sequence length for keypad: {sequence}")
+
+        if len([c for c in sequence if c in self._vowels]) > self.max_vowels:
+            raise ValueError("Too many vowels in sequence: {sequence}".format(sequence=sequence))
+
+        for i in range(1, len(sequence)):
+            next_moves = self.get_valid_next_moves(sequence[i-1])
+            if sequence[i] in next_moves:
+                continue
+            else:
+                print(f"Invalid move {sequence[i]}({i}) from {sequence[i-1]}({i-1}). Should be one of {next_moves}")
+                return False
+        return True
 
 
 if __name__ == '__main__':

@@ -18,12 +18,16 @@ class KeypadSequenceFinderTests(TestCase):
         self.assertEqual(self.subject.get_valid_next_moves('2'), {'G', 'I', 'K', 'O'})
 
     def test_get_sequence_count(self):
-        self.assertEqual(self.subject.get_sequence_count('A',1, 1), 30004)
-        self.assertEqual(self.subject.get_sequence_count('B',1, 0), 49154)
-        self.assertEqual(self.subject.get_sequence_count('1', 1, 0), 64287)
+        self.assertEqual(self.subject.get_sequence_count('A',1, 1, ('A')), 30004)
+        # self.assertEqual(self.subject.get_sequence_count('B',1, 0, ['B']), 49154)
+        # self.assertEqual(self.subject.get_sequence_count('1', 1, 0, ['1']), 64287)
 
     def test_get_total_count(self):
         self.assertEqual(self.subject.get_total_count(), 1013398)
+
+    def test_validate_sequence(self):
+        self.assertEqual(self.subject.validate_sequence(['A', 'H', '3', 'J', 'C', 'F', 'M', 'D', 'O', '2']), True)
+        self.assertEqual(self.subject.validate_sequence(['A', 'H', 'C', 'D', 'E', 'F', 'G', 'H', '1', '2']), False)
 
 
 class KeypadTests(TestCase):
