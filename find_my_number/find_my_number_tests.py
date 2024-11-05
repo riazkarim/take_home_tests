@@ -1,15 +1,15 @@
 from unittest import TestCase
 
-from find_my_number import Keypad
+from find_my_number import Keypad, KnightMover, BishopMover
 from find_my_number import KeypadSequenceFinder
 
 """
 Test classes for Keypad and KeypadSequenceFinder that test functionality given the sequence_length/max_vowels specified in the problem.
 """
 
-class KeypadSequenceFinderTests(TestCase):
+class KeypadKnightSequenceFinderTests(TestCase):
     def setUp(self):
-        self.subject = KeypadSequenceFinder(keypad=Keypad(), sequence_length=10, max_vowels=2)
+        self.subject = KeypadSequenceFinder(keypad=Keypad(), mover=KnightMover(), sequence_length=10, max_vowels=2)
 
     def test_get_valid_next_moves(self):
         self.assertEqual(self.subject.get_valid_next_moves('A'), {'L', 'H'})
@@ -21,6 +21,23 @@ class KeypadSequenceFinderTests(TestCase):
         self.assertEqual(self.subject.get_sequence_count('A',1, 1), 30004)
         self.assertEqual(self.subject.get_sequence_count('B',1, 0), 49154)
         self.assertEqual(self.subject.get_sequence_count('1', 1, 0), 64287)
+
+    def test_get_total_count(self):
+        self.assertEqual(self.subject.get_total_count(), 1013398)
+
+class KeypadBishopSequenceFinderTests(TestCase):
+    def setUp(self):
+        kp = Keypad()
+        self.subject = KeypadSequenceFinder(keypad=kp, mover=BishopMover(keypad=kp), sequence_length=10, max_vowels=2)
+
+    def test_get_valid_next_moves(self):
+        self.assertEqual(self.subject.get_valid_next_moves('A'), {'G', 'M', '3'})
+        self.assertEqual(self.subject.get_valid_next_moves('H'), {'B', 'N', 'D', 'L'})
+
+    def test_get_sequence_count(self):
+        self.assertEqual(self.subject.get_sequence_count('A',1, 1), 65906)
+        self.assertEqual(self.subject.get_sequence_count('B',1, 0), 79647)
+        self.assertEqual(self.subject.get_sequence_count('1', 1, 0), 130787)
 
     def test_get_total_count(self):
         self.assertEqual(self.subject.get_total_count(), 1013398)
