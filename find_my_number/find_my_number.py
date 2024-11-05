@@ -100,7 +100,6 @@ class KeypadSequenceFinder:
     A recursive method to get the total number of sequences that are possible within the bounds of MAX_VOWELS and DESIRED_SEQ_LENGTH.
     This method uses a cache (memoisation) to reduce the number of repeated recursive calls. 
     """
-    @lru_cache(None)
     def get_sequence_count(self, key: str, length: int, num_vowels: int, keys: List[str]) -> int:
         # if the sequence length is sequence_length, the sequence is valid, return 1
         if length == self.sequence_length:
@@ -112,9 +111,9 @@ class KeypadSequenceFinder:
         for next_key in valid_next_keys:
             if next_key in self._vowels:
                 if num_vowels < self.max_vowels:  # Only recurse if we have not met our vowel limit
-                    total += self.get_sequence_count(next_key, length + 1, num_vowels + 1, keys + next_key)
+                    total += self.get_sequence_count(next_key, length + 1, num_vowels + 1, keys + [next_key])
             else:
-                total += self.get_sequence_count(next_key, length + 1, num_vowels, keys + next_key)
+                total += self.get_sequence_count(next_key, length + 1, num_vowels, keys + [next_key])
         return total
 
     """
