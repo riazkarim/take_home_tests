@@ -1,0 +1,1 @@
+python ./generator.py && python ./log_processor.py && docker-compose up -d
